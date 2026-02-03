@@ -58,13 +58,16 @@ export const useGestureRecognition = ({
     useEffect(() => {
         async function loadModel() {
             try {
-                await tf.ready();
-                console.log('TF.js is ready. Attempting to load recognition model...');
-                const m = await tf.loadLayersModel('/model/model.json');
-                setModel(m);
-                console.log('✅ ML Model loaded successfully.');
-            } catch {
-                console.warn('ML Model not found at /model/model.json. Falling back to rule-based engine.');
+                // Check if tf is available and ready
+                if (typeof tf !== 'undefined' && tf.ready) {
+                    await tf.ready();
+                    console.log('TF.js is ready. Attempting to load recognition model...');
+                    const m = await tf.loadLayersModel('/model/model.json');
+                    setModel(m);
+                    console.log('✅ ML Model loaded successfully.');
+                }
+            } catch (err) {
+                console.warn('ML Model could not be loaded. Falling back to rule-based engine.', err);
             }
         }
         loadModel();

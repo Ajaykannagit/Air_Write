@@ -3,11 +3,17 @@ import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './',
   plugins: [react()],
   optimizeDeps: {
-    exclude: ['lucide-react', '@mediapipe/hands'],
-    commonjsOptions: {
-      include: []
-    }
+    include: [
+      '@mediapipe/hands',
+      '@mediapipe/drawing_utils',
+      '@mediapipe/camera_utils',
+      'lucide-react'
+    ]
+  },
+  define: {
+    global: 'window',
   },
 });

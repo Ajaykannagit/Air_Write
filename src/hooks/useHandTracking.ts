@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
-import { Hands, Results, Options } from '@mediapipe/hands';
+import { Results, Options } from '@mediapipe/hands';
 
 
 
@@ -12,7 +12,7 @@ export const useHandTracking = ({ videoElement, sensitivity }: UseHandTrackingPr
     const [results, setResults] = useState<Results | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [loadingProgress, setLoadingProgress] = useState(0);
-    const handsRef = useRef<Hands | null>(null);
+    const handsRef = useRef<any | null>(null);
     const isProcessingRef = useRef(false);
 
     const onResults = useCallback((res: Results) => {
@@ -23,8 +23,16 @@ export const useHandTracking = ({ videoElement, sensitivity }: UseHandTrackingPr
         try {
             setLoadingProgress(30);
 
-            const hands = new Hands({
-                locateFile: (file: string) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+            // Import Hands from @mediapipe/hands robustly
+            const mpHands = await import('@mediapipe/hands');
+            const HandsClass = mpHands.Hands || (mpHands as any).default?.Hands || (window as any).Hands;
+
+            if (!HandsClass) {
+                throw new Error('MediaPipe Hands library not found');
+            }
+
+            const hands = new HandsClass({
+                locateFile: (file: string) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/${file}`
             });
 
             const options: Options = {
@@ -38,13 +46,20 @@ export const useHandTracking = ({ videoElement, sensitivity }: UseHandTrackingPr
             hands.setOptions(options);
 
             hands.onResults(onResults);
-            await hands.initialize();
+
+            // Initialization is handled automatically by .send() in newer versions, 
+            // but we try to call it manually to catch errors early.
+            if (hands.initialize) {
+                await hands.initialize();
+            }
+
             handsRef.current = hands;
 
             setLoadingProgress(100);
             setIsLoading(false);
         } catch (err) {
             console.error('Error initializing MediaPipe Hands:', err);
+            // Don't keep loading forever even on error
             setIsLoading(false);
         }
     }, [onResults, sensitivity]);
