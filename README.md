@@ -267,13 +267,22 @@ npm run lint
 
 ## 🧭 Forward Trajectory
 
-* ✨ Custom ML model training on EMNIST dataset
-* ✨ Context-aware word prediction
-* ✨ Multilingual handwriting models
-* ✨ Gesture-based editing improvements
-* ✨ Electron & PWA packaging
-* ✨ Multi-hand gesture support
-* ✨ Cursive writing recognition
+### 1. Core Recognition & Intelligence
+* **✨ Cursive & Continuous Writing** — Segmenting single long strokes into individual characters using sequence modeling (LSTMs/Transformers).
+* **✨ Multi-Hand & 3D Gestures** — Evolving beyond single-hand 2D planes to 3D object manipulation and two-handed command sets.
+* **✨ Personalized Adaptation** — Systems that learn user-specific shorthands and adapt to unique handwriting styles ("font" recognition).
+
+### 2. UI/UX & Multimodal Interaction
+* **✨ AR Integration** — Bringing "Air Write" to life by floating text in real-world environments via headsets or mobile AR.
+* **✨ Haptic Feedback** — Integrating wearable haptics to provide a tactile sense of the virtual writing surface.
+* **✨ Voice & Gesture Fusion** — Combining vocal commands with spatial writing for a seamless multi-modal experience.
+* **✨ Generative AI Styling** — Using LLMs and image models to render air-written words with dynamic visual styles (e.g., "Fire" rendered in flames).
+
+### 3. Ecosystem & Integrations
+* **✨ OS-Level Control** — Extending gestures to system-wide navigation, application switching, and desktop control.
+* **✨ Collaborative Spaces** — Shared virtual canvases where multiple users can write and draw together in real-time.
+* **✨ Accessibility Devices** — Refining the engine into a powerful silent communication tool for individuals with speech impairments.
+* **✨ Platform Expansion** — Packaging as PWA and Electron-based desktop apps for better resource access and native feel.
 
 ---
 
