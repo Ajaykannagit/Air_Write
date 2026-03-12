@@ -14,7 +14,7 @@
 
 ---
 
-## 🌌 North Star
+## 🌌 North star
 
 Keyboards assume hands, desks, and posture.
 AirScript AI assumes **intent**.
